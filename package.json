@@ -1,0 +1,48 @@
+{
+  "name": "app-servizi",
+  "version": "1.0.0",
+  "description": "Backend completo Servizi360 — gestione utenti, venditori, prenotazioni, recensioni, servizi, offerte, promozioni, autenticazione JWT, pagamenti e traduzioni.",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "backend": "nodemon server/server.js",
+    "frontend": "live-server --port=5500",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/ios": "^8.0.0",
+    "axios": "^1.6.8",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.0",
+    "nodemailer": "^7.0.10",
+    "stripe": "^14.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "live-server": "^1.2.2",
+    "nodemon": "^3.1.11"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "mongoose",
+    "stripe",
+    "deepl",
+    "jwt",
+    "backend",
+    "api",
+    "servizi"
+  ],
+  "author": "Andrea Tremamunno",
+  "license": "MIT"
+}
