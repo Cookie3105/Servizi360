@@ -1,13 +1,13 @@
 // server/routes/venditoriRoutes.js
-// Gestione profilo venditore
-
 import express from "express";
 import {
+  registerVenditore, // <--- NUOVA
+  loginVenditore,    // <--- NUOVA
+  listaVenditori,
+  venditoreById,
   creaVenditore,
   getVenditoreLogged,
-  aggiornaVenditore,
-  venditoreById,
-  listaVenditori
+  aggiornaVenditore
 } from "../controllers/venditoriController.js";
 
 import { verificaToken } from "../middleware/verificaToken.js";
@@ -15,29 +15,18 @@ import { verificaRuolo } from "../middleware/verificaRuolo.js";
 
 const router = express.Router();
 
-// CREA PROFILO VENDITORE
-router.post("/", verificaToken, verificaRuolo("user"), creaVenditore);
+// --- ROTTE PUBBLICHE (Auth) ---
+router.post("/register", registerVenditore); // Risolve l'errore 404
+router.post("/login", loginVenditore);
 
-// PROFILO DEL VENDITORE LOGGATO
-router.get(
-  "/me",
-  verificaToken,
-  verificaRuolo("venditore"),
-  getVenditoreLogged
-);
-
-// LISTA TUTTI I VENDITORI
+// --- ROTTE DI LETTURA ---
 router.get("/", listaVenditori);
-
-// OTTIENI VENDITORE PER ID
 router.get("/:id", venditoreById);
 
-// AGGIORNA PROFILO VENDITORE
-router.put(
-  "/:id",
-  verificaToken,
-  verificaRuolo("venditore"),
-  aggiornaVenditore
-);
+// --- ROTTE PROTETTE ---
+// (Queste richiedono token, le sistemeremo dopo se servono)
+router.post("/", verificaToken, verificaRuolo("user"), creaVenditore);
+router.get("/me", verificaToken, verificaRuolo("venditore"), getVenditoreLogged);
+router.put("/:id", verificaToken, verificaRuolo("venditore"), aggiornaVenditore);
 
 export default router;

@@ -1,11 +1,11 @@
-// server/routes/serviziRoutes.js
 import express from "express";
 import { 
   listaServizi, 
   getServizioById,
   creaServizio,
   aggiornaServizio,
-  eliminaServizio 
+  eliminaServizio,
+  cercaServizi // <--- IMPORTANTE: Deve essere importato
 } from "../controllers/serviziController.js";
 
 import { verificaToken } from "../middleware/verificaToken.js";
@@ -14,22 +14,18 @@ import { verificaRuolo } from "../middleware/verificaRuolo.js";
 const router = express.Router();
 
 // GET /api/servizi
-// Cerca e filtra i servizi (usa la logica del Controller)
 router.get("/", listaServizi);
 
 // GET /api/servizi/:id
-// Dettaglio singolo servizio
 router.get("/:id", getServizioById);
 
-// --- Rotte protette per Admin (Opzionali ma consigliate) ---
+// --- ROTTA RICERCA (PUBBLICA) ---
+// Se questa riga manca, il bottone darà errore 404
+router.post("/cerca", cercaServizi); 
 
-// POST /api/servizi (Crea nuovo servizio)
-router.post("/", verificaToken, verificaRuolo("admin"), creaServizio);
-
-// PUT /api/servizi/:id (Modifica servizio)
-router.put("/:id", verificaToken, verificaRuolo("admin"), aggiornaServizio);
-
-// DELETE /api/servizi/:id (Elimina servizio)
-router.delete("/:id", verificaToken, verificaRuolo("admin"), eliminaServizio);
+// --- ROTTE PROTETTE VENDITORE ---
+router.post("/", verificaToken, verificaRuolo("venditore"), creaServizio);
+router.put("/:id", verificaToken, verificaRuolo("venditore"), aggiornaServizio);
+router.delete("/:id", verificaToken, verificaRuolo("venditore"), eliminaServizio);
 
 export default router;
