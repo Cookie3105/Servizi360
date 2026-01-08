@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: true }));
 // =========================================================
 // Se sei in locale e hai problemi, puoi commentare la riga sotto
 // e usare: app.use(cors({ origin: "*" }));
-app.use(cors(corsOptions)); 
+app.use(cors()); 
 
 // Logging semplice
 app.use((req, res, next) => {
